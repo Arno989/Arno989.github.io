@@ -41,7 +41,9 @@ html {
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: white;
+    /* background: linear-gradient(221deg, rgba(30,156,215,1) 0%, rgba(0,92,153,1) 100%) rgb(30,156,215); */
+    background: linear-gradient(157.57deg, #1a1763 2.34%, #9a479c 62.28%, #dd7373 88.63%);
+    height: 100vh;
 }
 
 *,
@@ -200,6 +202,13 @@ input::placeholder {
     color: var(--color-neutral-light);
 }
 
+body {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    height: 100vh;
+}
+
 /*------------------------------------*\
 #OBJECTS
 \*------------------------------------*/
@@ -294,6 +303,20 @@ input::placeholder {
     ---
     Website main logo
 */
+
+.c-arch{
+	position: fixed;
+	height: 100%;
+	width: 100%;
+    z-index: -50;
+}
+
+.c-form{
+    background-color: #e6e6e6;
+    border-radius: 25px;
+    width: 600px;
+    height: 80vh;
+}
 
 /*------------------------------------*\
 #UTILITIES
@@ -429,69 +452,4 @@ No media query since this is the default in mobile first design
 @media (min-width: 1200px) {}
 */
 
-/*
-    Print styles.
-    ---
-    Inlined to avoid the additional HTTP request:
-    http://www.phpied.com/delay-loading-your-print-css/
-*/
 
-@media print {
-    *,
-    *:before,
-    *:after {
-        background: transparent !important;
-        color: #000 !important;
-        /* Black prints faster:
-        http://www.sanbeiji.com/archives/953 */
-        box-shadow: none !important;
-        text-shadow: none !important;
-    }
-    a,
-    a:visited {
-        text-decoration: underline;
-    }
-    a[href]:after {
-        content: " (" attr(href) ")";
-    }
-    abbr[title]:after {
-        content: " (" attr(title) ")";
-    }
-    /*
-    * Don't show links that are fragment identifiers,
-    * or use the `javascript:` pseudo protocol
-    */
-    a[href^="#"]:after,
-    a[href^="javascript:"]:after {
-        content: "";
-    }
-    pre {
-        white-space: pre-wrap !important;
-    }
-    pre,
-    blockquote {
-        border: 1px solid #999;
-        page-break-inside: avoid;
-    }
-    /*
-    * Printing Tables:
-    * http://css-discuss.incutio.com/wiki/Printing_Tables
-    */
-    thead {
-        display: table-header-group;
-    }
-    tr,
-    img {
-        page-break-inside: avoid;
-    }
-    p,
-    h2,
-    h3 {
-        orphans: 3;
-        widows: 3;
-    }
-    h2,
-    h3 {
-        page-break-after: avoid;
-    }
-}

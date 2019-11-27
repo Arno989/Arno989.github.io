@@ -13,9 +13,6 @@ html {
   line-height: 1.15; /* 1 */
   -ms-text-size-adjust: 100%; /* 2 */
   -webkit-text-size-adjust: 100%; /* 2 */
-  background: rgb(30,156,215);
-  background: linear-gradient(221deg, rgba(30,156,215,1) 0%, rgba(0,92,153,1) 100%);
-  height: 100vh;
 }
 
 /* Sections

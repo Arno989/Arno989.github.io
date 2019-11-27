@@ -1,0 +1,14 @@
+<svg id="Component_1_1" data-name="Component 1 – 1" xmlns="http://www.w3.org/2000/svg" width="369.32" height="47" viewBox="0 0 369.32 47">
+  <g id="Spacex">
+    <path id="Path_1" data-name="Path 1" d="M79.455,15.094H49.326l-1.116.835v26.8h8.34V32.68l.8-.713H79.456c5.582,0,8.2-1.5,8.2-5.356V20.457c0-3.86-2.617-5.363-8.2-5.363m0,9.909c0,1.816-1.2,2.193-3.818,2.193h-18.2l-.888-.864V20.59l.8-.728H75.636c2.617,0,3.818.373,3.818,2.2Z" transform="translate(3.585 1.122)" fill="#005288"/>
+    <path id="Path_2" data-name="Path 2" d="M99.991,20.188,107.167,30.7l-.4,1.018H90.9L86.847,36.7h23.625l1.637,1,3.668,5.059h9.545L104.4,14.775" transform="translate(6.458 1.099)" fill="#005288"/>
+    <path id="Path_3" data-name="Path 3" d="M188.005,36.651V29.212l.858-.741h15.967V23.734H179.524v18.36h37.33V37.379H188.9" transform="translate(13.349 1.765)" fill="#005288"/>
+    <rect id="Rectangle_2" data-name="Rectangle 2" width="37.724" height="5.209" transform="translate(192.873 16.216)" fill="#005288"/>
+    <path id="Path_4" data-name="Path 4" d="M141.01,20.027H171.4c-.468-3.864-2.866-4.937-8.949-4.937H140.687c-6.864,0-9.054,1.34-9.054,6.534V36.2c0,5.2,2.19,6.54,9.054,6.54h21.766c6.172,0,8.536-1.159,8.7-5.168H141.01l-.894-.841V20.59" transform="translate(9.788 1.122)" fill="#005288"/>
+    <path id="Path_5" data-name="Path 5" d="M31.514,25.864H9.4l-.651-.717V20.418l.648-.5h29.8l.407-1c-1.015-2.612-3.644-3.83-8.526-3.83h-20.7c-6.86,0-9.053,1.34-9.053,6.534v3.055c0,5.2,2.193,6.539,9.053,6.539h22.06l.693.608v4.944l-.565.771H7.338v-.024H.728s-.756.379-.727.557c.564,3.633,3.039,4.663,8.966,4.663H31.514c6.859,0,9.117-1.34,9.117-6.54V32.393c0-5.191-2.258-6.529-9.117-6.529" transform="translate(0 1.122)" fill="#005288"/>
+    <path id="Path_6" data-name="Path 6" d="M237.631,14.988h-12.41l-.674,1.282,13.782,10.046c2.611-1.512,5.451-3.044,8.541-4.555" transform="translate(16.697 1.115)" fill="#005288"/>
+    <path id="Path_7" data-name="Path 7" d="M247.075,32.989l12.113,8.833H271.75l.52-1.17L254.182,27.413q-3.6,2.645-7.107,5.576" transform="translate(18.373 2.038)" fill="#005288"/>
+    <path id="Path_8" data-name="Path 8" d="M235.849,43.84H224.621l-.949-1.486c7.634-7.371,41.78-38.969,116-42.355,0,0-62.3,2.1-103.824,43.84" transform="translate(16.632)" fill="#a7a9ac"/>
+  </g>
+  <text id="Data_Project" data-name="Data Project" transform="translate(299.32 44)" fill="#005288" font-size="12" font-family="Inter-Regular, Inter"><tspan x="0" y="0">Data Project</tspan></text>
+</svg>
