@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
 		<title>SpaceX Data Project</title>
-		<link rel="icon" href="favicon.ico?" type="image/x-icon" />
-		<link rel="stylesheet" type="text/css" href="/css/yeet.css" />
+
+		<link rel="stylesheet" href="css/normalize.css">
+		<link rel="stylesheet" href="css/screen.css">
 	</head>
-	<body>
+	
+	<body class="c-landing">
 		<header>
-			<div class="logo-background">
-				<img class="logo" src="/img/logo-white.svg" alt="SpaceX Data Project" />
+			<div class="c-logo__background">
+				<img class="c-logo" src="/img/logo-white.svg" alt="SpaceX Data Project" />
 			</div>
 		</header>
-		<svg class="staart-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88.995 45.677" preserveAspectRatio="none">
+		<svg class="c-arch" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88.995 45.677" preserveAspectRatio="none">
 			<g id="Spacex" transform="translate(-82.54 97.918)">
 				<path
 					id="Path_8"
@@ -26,13 +27,13 @@
 			</g>
 		</svg>
 		<main>
-			<div class="paragraph">
+			<div class="c-paragraph">
 				<p>A project that uses data gathered from spaceX about passed, upcoming and current launches and all the info they have available.</p>
 			</div>
 			<p>Coming online Dec 19th, get notified when we launch:</p>
 			<form id="newsletter-signup" action="/subscribe" method="POST">
-				<input type="email" id="email" name="email" placeholder="Your email address..." required="" />
-				<button type="submit" class="button">Notify Me</button>
+				<input type="email" id="email" name="email" placeholder="Your email address..."/>
+				<button type="submit" class="c-button">Notify Me</button>
 			</form>
 		</main>
 	</body>

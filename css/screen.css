@@ -43,7 +43,6 @@ html {
     -moz-osx-font-smoothing: grayscale;
     /* background: linear-gradient(221deg, rgba(30,156,215,1) 0%, rgba(0,92,153,1) 100%) rgb(30,156,215); */
     background: linear-gradient(157.57deg, #1a1763 2.34%, #9a479c 62.28%, #dd7373 88.63%);
-    height: 100vh;
 }
 
 *,
@@ -304,18 +303,233 @@ body {
     Website main logo
 */
 
-.c-arch{
-	position: fixed;
-	height: 100%;
-	width: 100%;
-    z-index: -50;
+.c-logo {
+	margin: 4px 0 8px 0;
+	max-width: 382px;
+	min-width: 194px;
+	width: 70%;
 }
+
+.c-logo__background {
+	display: flex;
+	justify-content: center;
+	background-color: #005288;
+	border-radius: 50px;
+	height: 70px;
+}
+
+/*
+    Component: Form
+    ---
+    Website main Form
+*/
 
 .c-form{
     background-color: #e6e6e6;
     border-radius: 25px;
+    margin: auto;
     width: 600px;
     height: 80vh;
+}
+
+.c-paragraph{
+    max-width: 500px;
+    margin-left: 64px;
+    margin-right: 64px;
+    margin-top: 32px;
+}
+
+.c-paragraph p{
+    font-weight: 400;
+    line-height: 1.5em;
+}
+
+/*
+    Component: Button
+    ---
+    Website main Button
+*/
+
+.c-button {
+	border: none;
+	text-transform: uppercase;
+	color: #fff;
+	letter-spacing: 0.16em;
+	background-color: #005288;
+	box-shadow: 0px 4px 16px rgba(0, 82, 136, 0.3);
+	border-radius: 35px;
+	padding: 1em 2em;
+	width: 20vw;
+	min-width: 101px;
+	max-width: 190px;
+}
+
+/*
+    Component: Background
+    ---
+    Website main Background
+*/
+
+.c-arch{
+	position: fixed;
+	height: 100vh;
+	width: 100vw;
+    z-index: -50;
+}
+
+/*
+    Component: Landing page
+    ---
+    Website main Landing page
+*/
+
+.c-landing {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+}
+
+.c-landing header {
+	display: flex;
+	justify-content: center;
+	align-items: flex-end;
+	height: 25vh;
+}
+
+.c-landing main {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	height: 100vh;
+}
+
+.c-landing main p {
+	font-weight: 400;
+	line-height: 1.5em;
+	color: #ffffff;
+	opacity: 0.8;
+	letter-spacing: 0.06em;
+}
+
+.c-landing main p {
+	font-size: 12px;
+}
+
+@media screen and (min-width: 320px) {
+	.c-landing main p {
+		font-size: calc(12px + 8 * ((100vw - 320px) / 880));
+    }
+}
+
+@media screen and (min-width: 1200px) {
+	.c-landing main p {
+		font-size: 20px;
+	}
+}
+
+.c-landing main #newsletter-signup {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	width: 100vw;
+	height: 55px;
+	max-width: 529px;
+	min-width: 285px;
+}
+
+.c-landing main #newsletter-signup input {
+	border: none;
+	background-color: #e6e6e6;
+	box-shadow: 0px 4px 16px rgba(72, 23, 120, 0.3);
+	border-radius: 35px;
+	padding: 1em 2em;
+	width: 17vw;
+	max-width: 323px;
+	min-width: 194px;
+	margin-right: 1.5em;
+}
+
+.c-landing main #newsletter-signup input {
+	font-size: 11px;
+}
+
+@media screen and (min-width: 320px) {
+	.c-landing main #newsletter-signup input {
+		font-size: calc(11px + 5 * ((100vw - 320px) / 880));
+	}
+}
+
+@media screen and (min-width: 1200px) {
+	.c-landing main #newsletter-signup input {
+		font-size: 16px;
+	}
+}
+
+.c-landing main #newsletter-signup button {
+	border: none;
+	text-transform: uppercase;
+	color: #fff;
+	letter-spacing: 0.16em;
+	background-color: #005288;
+	box-shadow: 0px 4px 16px rgba(0, 82, 136, 0.3);
+	border-radius: 35px;
+	padding: 1em 2em;
+	width: 20vw;
+	min-width: 101px;
+	max-width: 190px;
+}
+
+.c-landing main #newsletter-signup button {
+	font-size: 11px;
+}
+
+@media screen and (min-width: 320px) {
+	.c-landing main #newsletter-signup button {
+		font-size: calc(11px + 5 * ((100vw - 320px) / 880));
+	}
+}
+
+@media screen and (min-width: 1200px) {
+	.c-landing main #newsletter-signup button {
+		font-size: 16px;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.c-landing main #newsletter-signup {
+		width: 100vw;
+		max-width: 360px;
+		height: 36px;
+	}
+
+	.logo-background {
+		height: 50px;
+	}
+
+	.c-landing main #newsletter-signup input {
+		border-radius: 35px 0 0 35px;
+		padding: 0.8em 1.5em;
+		margin-right: 0;
+	}
+	.c-landing main #newsletter-signup button {
+		width: 55vw;
+		min-width: 101px;
+		max-width: 125px;
+		border-radius: 0 35px 35px 0;
+		padding: 0.8em;
+	}
+}
+
+@media screen and (max-width: 375px) {
+	.c-landing main #newsletter-signup input {
+		min-width: 155px;
+		margin-left: 2em;
+	}
+	.c-landing main #newsletter-signup button {
+		min-width: 94px;
+		margin-right: 2em;
+	}
 }
 
 /*------------------------------------*\
