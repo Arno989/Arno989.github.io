@@ -1,11 +1,13 @@
 var ENDPOINT = 'https://api.spacexdata.com/v3/launches/';
-let position = 0;
+var ENDPOINTAll = 'https://api.spacexdata.com/v3/launches?sort=launch_date_utc';
+let position = 0, positionstars = 0, amount;
+
 const FULL_CIRCLE = 2 * Math.PI;
 let ctx, timer, particles;
 
 const drawStars = ctx => {
 	ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-	for (let i = 0; i < 1000; i++) {
+	for (let i = 0; i < 10000; i++) {
 		ctx.beginPath();
 		let x = Math.random() * ctx.canvas.width,
 			y = Math.random() * ctx.canvas.height,
@@ -21,7 +23,7 @@ const loadCanvas = () => {
 	const canvas = document.querySelectorAll('.js-stars');
 
 	canvas.forEach(element => {
-		element.width = document.documentElement.clientWidth;
+		element.width = document.documentElement.clientWidth * 10;
 		element.height = document.documentElement.clientHeight;
 		ctx = element.getContext('2d');
 		drawStars(ctx);
@@ -31,51 +33,86 @@ const loadCanvas = () => {
 	}, 1000); */
 };
 
+
+
 const fetchData = function(end) {
 	return fetch(end)
 		.then(r => r.json())
 		.then(data => data);
 };
 
-const getData = async function(end) {
+const getDataUpcoming = async function() {
 	try {
-		const data = await fetchData(end);
-		showdata(data);
+		const data = await fetchData(ENDPOINT.concat('upcoming?sort=launch_date_utc'));
+		showUpcoming(data);
 	} catch (error) {
 		console.warn(error);
 	}
 };
 
-/* utc = gmt */
-/* document.querySelector('.js-button-AllTime').addEventListener('click', AllTime); */
-const showdata = function(data) {
-	var datetime = new Date(data.launch_date_utc);
-	var location = data.launch_site.site_name_long;
-	var rocket = data.rocket.rocket_name;
-	var orbit = data.rocket.second_stage.payloads[0].orbit_params.reference_system;
-	var distance = data.rocket.second_stage.payloads[0].orbit_params.regime;
-	var reused = data.rocket.second_stage.payloads[0].reused;
-	var mission = data.mission_name;
+const showUpcoming = function(data) {
+	var i = 0;
+	data.forEach(element => {
+		var datetime = new Date(element.launch_date_utc);
+		console.log(datetime)
+		var location = element.launch_site.site_name_long;
+		var rocket = element.rocket.rocket_name;
+		var orbit = element.rocket.second_stage.payloads[0].orbit_params.reference_system;
+		var position = element.rocket.second_stage.payloads[0].orbit_params.regime;
+		var reused = element.rocket.second_stage.payloads[0].reused;
+		var mission = element.mission_name;
 
-	console.log(datetime, location, rocket, orbit, distance, reused, mission);
+		let reusedtext, rocketimg;
 
-	document.querySelector('.js-mission').innerHTML = mission;
-	document.querySelector('.js-launchloc').innerHTML = location;
-	if (reused) {
-		document.querySelector('.js-reused').innerHTML = 'reused';
-	} else {
-		document.querySelector('.js-reused').innerHTML = 'brand new';
-	}
+		if (reused) {
+			reusedtext = 'reused';
+		} else {
+			reusedtext = 'brand new';
+		}
 
-	document.querySelector('.js-orbit').innerHTML = orbit;
-	document.querySelector('.js-position').innerHTML = distance;
-	document.querySelector('.js-rocket').innerHTML = rocket;
-	showTimer(datetime);
+		switch (rocket) {
+			case 'Falcon 9':
+				rocketimg = '<img class="c-rocketimg" src="img/falcon9.svg"></img>';
+				break;
 
-	document.querySelector('.js-date').innerHTML = ''.concat(datetime.toLocaleDateString(), ' at ', datetime.toLocaleTimeString());
+			case 'Falcon Heavy':
+				rocketimg = '<img class="c-rocketimg" src="img/falconheavy.svg"></img>';
+				break;
+
+			case 'Falcon 1':
+				rocketimg = '<img class="c-rocketimg" src="img/falcon1.svg"></img>';
+				break;
+
+			default:
+				rocketimg = '<img class="c-rocketimg" src="img/falcon9.svg"></img>';
+				break;
+		}
+
+		var HTML = `
+		<div class="c-content">
+			<img class="c-logo" src="img/logo-white.svg"></img>
+			<div class="c-form">
+			<p class="c-title">The next mission is ${mission} and launches in</p>
+			<p class="c-countdown"><span class="js-countdown${i}"></span></p>
+			<p class="c-rocketkind">In a ${reusedtext} ${rocket}</p>
+			${rocketimg}
+			<div class="c-textarea">
+				<p class="c-orbit">Going into a ${orbit} ${position} orbit</p>
+				<p class="c-date">On ${datetime.toLocaleDateString()} at ${datetime.toLocaleTimeString()} in your local timezone</p>
+				<p class="c-launchloc">At ${location}</p>
+			</div>
+			</div>
+		</div>`;
+
+		document.querySelector('.c-container').innerHTML += HTML;
+
+		showTimer(datetime, i);
+		i++;
+		amount++;
+	});
 };
 
-const showTimer = function(time) {
+const showTimer = function(time, i) {
 	var x = setInterval(function() {
 		var now = new Date().getTime();
 		var distance = time - now;
@@ -84,35 +121,25 @@ const showTimer = function(time) {
 		var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 		var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-		document.querySelector('.js-countdown').innerHTML = hours + ' hours, ' + minutes + ' minutes and ' + seconds + ' seconds ';
+		document.querySelector(`.js-countdown${i}`).innerHTML = hours + ' hours, ' + minutes + ' minutes and ' + seconds + ' seconds ';
 	}, 1000);
-};
-
-const Next = function() {
-	console.log('Getting next');
-	getData(ENDPOINT.concat('next'));
-};
-
-const Last = function() {
-	console.log('Getting last');
-	getData(ENDPOINT.concat('last'));
-};
-
-const Upcomming = function() {
-	console.log('Getting upcomming');
-	getData(ENDPOINT.concat('upcomming'));
 };
 
 const init = function() {
 	document.querySelector('.c-button-right').addEventListener('click', function() {
 		position -= 100;
+		positionstars -= 32;
 		document.querySelector('.c-container').style.transform = `translateX(${position}vw)`;
+		document.querySelector('.js-stars').style.transform = `translateX(${positionstars}vw)`;
 	});
 	document.querySelector('.c-button-left').addEventListener('click', function() {
 		position += 100;
+		positionstars += 32;
 		document.querySelector('.c-container').style.transform = `translateX(${position}vw)`;
+		document.querySelector('.js-stars').style.transform = `translateX(${positionstars}vw)`;
 	});
-	getData(ENDPOINT.concat('next'));
+	/* getDataNext(); */
+	getDataUpcoming();
 };
 
 document.addEventListener('DOMContentLoaded', function() {
