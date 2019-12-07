@@ -24,7 +24,6 @@ const drawStars = ctx => {
 
 const loadCanvas = (width = 10) => {
 	const canvas = document.querySelectorAll('.js-stars');
-	console.log(width);
 	canvas.forEach(element => {
 		element.width = document.documentElement.clientWidth * width;
 		element.height = document.documentElement.clientHeight;
@@ -47,7 +46,6 @@ const getData = async function() {
 const showData = function(data) {
 	var i = 0;
 
-	console.log('started loading');
 	data.forEach(element => {
 		var datetime = new Date(element.launch_date_utc);
 
@@ -118,9 +116,7 @@ const showData = function(data) {
 		i++;
 		amount++;
 	});
-	console.log('finished loading');
 	document.querySelector('.c-container').style.transform = `translateX(${index}vw)`;
-	console.log(i);
 	loadCanvas();
 
 	document.querySelectorAll('.c-hidden').forEach(element => {
