@@ -2,7 +2,8 @@ var ENDPOINT = 'https://api.spacexdata.com/v3/launches/';
 var ENDPOINTAll = 'https://api.spacexdata.com/v3/launches?sort=launch_date_utc';
 let position = 0,
 	positionstars = 0,
-	amount;
+	amount,
+	index;
 
 const FULL_CIRCLE = 2 * Math.PI;
 let ctx, timer, particles;
@@ -21,103 +22,111 @@ const drawStars = ctx => {
 	}
 };
 
-const loadCanvas = () => {
+const loadCanvas = (width = 10) => {
 	const canvas = document.querySelectorAll('.js-stars');
-
+	console.log(width);
 	canvas.forEach(element => {
-		element.width = document.documentElement.clientWidth * 10;
+		element.width = document.documentElement.clientWidth * width;
 		element.height = document.documentElement.clientHeight;
 		ctx = element.getContext('2d');
 		drawStars(ctx);
 	});
-	/* let timer = setInterval(() => {
-		drawStars(ctx);
-	}, 1000); */
 };
 
-const fetchData = function(end) {
-	return fetch(end)
-		.then(r => r.json())
-		.then(data => data);
-};
-
-const getDataUpcoming = async function() {
+const getData = async function() {
 	try {
-		const data = await fetchData(ENDPOINT.concat('upcoming?sort=launch_date_utc') /* ENDPOINTALL */);
-		showUpcoming(data);
+		const data = await fetch(ENDPOINTAll)
+			.then(r => r.json())
+			.then(data => data);
+		showData(data);
 	} catch (error) {
 		console.warn(error);
 	}
 };
 
-const showUpcoming = function(data) {
+const showData = function(data) {
 	var i = 0;
+
+	console.log('started loading');
 	data.forEach(element => {
 		var datetime = new Date(element.launch_date_utc);
-		console.log(datetime);
-		var location = element.launch_site.site_name_long;
-		var rocket = element.rocket.rocket_name;
-		var orbit = element.rocket.second_stage.payloads[0].orbit_params.reference_system;
-		var position = element.rocket.second_stage.payloads[0].orbit_params.regime;
-		var reused = element.rocket.second_stage.payloads[0].reused;
-		var mission = element.mission_name;
-		var link = element.links.video_link;
 
-		let reusedtext, rocketimg;
-
-		if (reused) {
-			reusedtext = 'reused';
+		if (datetime < new Date().getTime()) {
+			/* old render */
 		} else {
-			reusedtext = 'brand new';
+			var location = element.launch_site.site_name_long;
+			var rocket = element.rocket.rocket_name;
+			var orbit = element.rocket.second_stage.payloads[0].orbit_params.reference_system;
+			var position = element.rocket.second_stage.payloads[0].orbit_params.regime;
+			var reused = element.rocket.second_stage.payloads[0].reused;
+			var mission = element.mission_name;
+			var link = element.links.video_link;
+
+			let reusedtext, rocketimg;
+
+			if (reused) {
+				reusedtext = 'reused';
+			} else {
+				reusedtext = 'brand new';
+			}
+
+			switch (rocket) {
+				case 'Falcon 9':
+					rocketimg = '<img class="c-rocketimg" src="img/falcon9.svg"></img>';
+					break;
+
+				case 'Falcon Heavy':
+					rocketimg = '<img class="c-rocketimg" src="img/falconheavy.svg"></img>';
+					break;
+
+				case 'Falcon 1':
+					rocketimg = '<img class="c-rocketimg" src="img/falcon1.svg"></img>';
+					break;
+
+				default:
+					rocketimg = '<img class="c-rocketimg" src="img/falcon9.svg"></img>';
+					break;
+			}
+
+			if (link != null) {
+				link = `<p class="c-link">Watch <a href="${link}">here</a></p>`;
+			} else {
+				link = '';
+			}
+
+			var HTML = `
+			<div class="c-content">
+				<img class="c-logo" src="img/logo-white.svg"></img>
+				<div class="c-form">
+				<p class="c-title">The next mission is ${mission} and launches in</p>
+				<p class="c-countdown"><span class="js-countdown${i}"></span></p>
+				<p class="c-rocketkind">In a ${reusedtext} ${rocket}</p>
+				${rocketimg}
+				<div class="c-textarea">
+					<p class="c-orbit">Going into a ${orbit} ${position} orbit</p>
+					<p class="c-date">On ${datetime.toLocaleDateString()} at ${datetime.toLocaleTimeString()} in your local timezone</p>
+					<p class="c-launchloc">At ${location}</p>
+					${link}
+				</div>
+				</div>
+			</div>`;
+
+			document.querySelector('.c-container').innerHTML += HTML;
+
+			showTimer(datetime, i);
 		}
-
-		switch (rocket) {
-			case 'Falcon 9':
-				rocketimg = '<img class="c-rocketimg" src="img/falcon9.svg"></img>';
-				break;
-
-			case 'Falcon Heavy':
-				rocketimg = '<img class="c-rocketimg" src="img/falconheavy.svg"></img>';
-				break;
-
-			case 'Falcon 1':
-				rocketimg = '<img class="c-rocketimg" src="img/falcon1.svg"></img>';
-				break;
-
-			default:
-				rocketimg = '<img class="c-rocketimg" src="img/falcon9.svg"></img>';
-				break;
-		}
-
-		if (link != null) {
-			link = `<p class="c-link">Watch <a href="${link}">here</a></p>`;
-		} else {
-			link = '';
-		}
-
-		var HTML = `
-		<div class="c-content">
-			<img class="c-logo" src="img/logo-white.svg"></img>
-			<div class="c-form">
-			<p class="c-title">The next mission is ${mission} and launches in</p>
-			<p class="c-countdown"><span class="js-countdown${i}"></span></p>
-			<p class="c-rocketkind">In a ${reusedtext} ${rocket}</p>
-			${rocketimg}
-			<div class="c-textarea">
-				<p class="c-orbit">Going into a ${orbit} ${position} orbit</p>
-				<p class="c-date">On ${datetime.toLocaleDateString()} at ${datetime.toLocaleTimeString()} in your local timezone</p>
-				<p class="c-launchloc">At ${location}</p>
-				${link}
-			</div>
-			</div>
-		</div>`;
-
-		document.querySelector('.c-container').innerHTML += HTML;
-
-		showTimer(datetime, i);
 		i++;
 		amount++;
 	});
+	console.log('finished loading');
+	document.querySelector('.c-container').style.transform = `translateX(${index}vw)`;
+	console.log(i);
+	loadCanvas();
+
+	document.querySelectorAll('.c-hidden').forEach(element => {
+		element.classList.remove('c-hidden');
+	});
+	document.querySelector('.c-loading').style.display = 'none';
 };
 
 const showTimer = function(time, i) {
@@ -146,11 +155,9 @@ const init = function() {
 		document.querySelector('.c-container').style.transform = `translateX(${position}vw)`;
 		document.querySelector('.js-stars').style.transform = `translateX(${positionstars}vw)`;
 	});
-	/* getDataNext(); */
-	getDataUpcoming();
+	getData();
 };
 
 document.addEventListener('DOMContentLoaded', function() {
 	init();
-	loadCanvas();
 });

@@ -23,17 +23,18 @@ change content of past launches with different info
 add timeline to future launches
 customize svg object more specifically
 fix date format
+scalability
  -->
 
 <body>
 
-  <svg class="c-button-right" xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 24 24">
+  <svg class="c-button-right c-hidden" xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 24 24">
     <path fill="#A7A9AC66" d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" />
     <path fill="none" d="M0 0h24v24H0V0z" /></svg>
-  <svg class="c-button-left" xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 24 24">
+  <svg class="c-button-left c-hidden" xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 24 24">
     <path fill="#A7A9AC66" d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z" />
     <path fill="none" d="M0 0h24v24H0V0z" /></svg>
-  <svg class="c-arch" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88.995 45.677" preserveAspectRatio="none">
+  <svg class="c-arch c-hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88.995 45.677" preserveAspectRatio="none">
     <g id="Spacex" transform="translate(-82.54 97.918)">
       <path id="Path_8" data-name="Path 8"
         d="M301.756,45.677h9.977C305.923,38,279.226,3.527,222.739,0c0,0,47.413,2.189,79.017,45.677"
@@ -41,8 +42,50 @@ fix date format
     </g>
   </svg>
 
+  <div class="c-loading">
+    <div class="artboard">
+      <div class="stars2">
+        <div class="shootingstar"></div>
+        <div class="shootingstar"></div>
+        <div class="shootingstar"></div>
+        <div class="shootingstar"></div>
+        <div class="shootingstar"></div>
+        <div class="shootingstar"></div>
+        <div class="shootingstar"></div>
+        <div class="shootingstar"></div>
+        <div class="shootingstar"></div>
+        <div class="shootingstar"></div>
+        <div class="shootingstar"></div>
+        <div class="shootingstar"></div>
+        <div class="shootingstar"></div>
+        <div class="shootingstar"></div>
+        <div class="shootingstar"></div>
+        <div class="shootingstar"></div>
+        <div class="shootingstar"></div>
+        <div class="shootingstar"></div>
+        <div class="shootingstar"></div>
+        <div class="shootingstar"></div>
+        <div class="shootingstar"></div>
+        <div class="shootingstar"></div>
+        <div class="shootingstar"></div>
+        <div class="shootingstar"></div>
+        <div class="shootingstar"></div>
+        <div class="shootingstar"></div>
+        <div class="shootingstar"></div>
+        <div class="shootingstar"></div>
+      </div>
 
-  <div class="c-overflow">
+
+      <div class="fire"></div>
+
+      <img id="rocket" class="c-rocketimg" src="img/falcon1up.svg"></img>
+    </div>
+
+
+
+  </div>
+
+  <div class="c-overflow c-hidden">
     <div class="c-container-stars">
       <canvas class="js-stars"></canvas>
     </div>
