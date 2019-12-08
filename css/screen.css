@@ -309,7 +309,7 @@ body {
 	justify-self: center;
 	align-self: flex-end;
 	grid-row: 1;
-	grid-column: 3;
+	grid-column: 4;
 	padding-bottom: 16px;
 	height: 70%;
 }
@@ -334,6 +334,16 @@ body {
 	justify-self: center;
 	align-self: center;
 	width: 100%;
+	margin: 0;
+}
+
+.c-rocketimg-out {
+	grid-row: 2;
+	grid-column: 5;
+	padding-left: 64px;
+	justify-self: start;
+	align-self: center;
+	height: 100%;
 	margin: 0;
 }
 
@@ -384,21 +394,21 @@ body {
 	flex-grow: 1;
 	width: 100vw;
 	display: grid;
-	grid-template-columns: 40px 50px auto 50px 40px;
+	grid-template-columns: 40px 50px auto max-content auto 50px 40px;
 	grid-template-rows: 100px auto 50px;
 }
 
 .c-form {
 	justify-self: center;
 	grid-row: 2;
-	grid-column: 3;
+	grid-column: 4;
 	background-color: #f3f3f3;
 	border-radius: 25px;
 	width: 100%;
 	max-width: 600px;
 	display: grid;
 	grid-template-columns: 64px auto 64px;
-	grid-template-rows: 32px auto auto 20px auto auto auto 32px;
+	grid-template-rows: 32px auto auto 5px auto auto auto 32px;
 }
 
 /*
@@ -431,6 +441,15 @@ body {
 	grid-column: 2;
 	font-size: 48px;
 	font-weight: 500;
+}
+
+.c-details {
+	text-align: center;
+	grid-row: 3;
+	grid-column: 2;
+	font-size: 18px;
+	color: gray;
+
 }
 
 .c-rocketkind {
