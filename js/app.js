@@ -10,14 +10,15 @@ let ctx, timer, particles;
 
 const drawStars = ctx => {
 	ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-	for (let i = 0; i < 10000; i++) {
+	for (let i = 0; i < 20000; i++) {
 		ctx.beginPath();
 		let x = Math.random() * ctx.canvas.width,
 			y = Math.random() * ctx.canvas.height,
 			size = Math.random() * 2;
 
 		ctx.arc(x, y, size, 0, FULL_CIRCLE);
-		ctx.fillStyle = 'rgb(255, 241, 194)';
+		ctx.fillStyle = `rgba(255, 241, 194, ${Math.random()})`;
+		/* ctx.fillStyle = 'rgb(255, 241, 194)'; */
 		ctx.fill();
 	}
 };
