@@ -1,3 +1,10 @@
+/* 
+Known bugs:
+Stars arent wide enough
+Bigg lag
+mobilen't
+
+*/
 var ENDPOINT = 'https://api.spacexdata.com/v3/launches/';
 var ENDPOINTAll = 'https://api.spacexdata.com/v3/launches?sort=launch_date_utc';
 let position = 0,
@@ -33,6 +40,7 @@ const loadCanvas = (width = 15) => {
 	});
 };
 
+
 const getData = async function() {
 	try {
 		const data = await fetch(ENDPOINTAll)
@@ -44,15 +52,75 @@ const getData = async function() {
 	}
 };
 
+const getRocket = (rocket_n, rocket_t, rocket_f, rocket_b) => {
+	switch (rocket_n) {
+		case 'Falcon 9':
+			if (rocket_t == 'v1.0') {
+				if (rocket_f) {
+					return '<img class="c-rocketimg-out" src="img/F9_v1.0_Fi_Pa.svg"></img>';
+				} else {
+					return '<img class="c-rocketimg-out" src="img/F9_v1.1_Pa.svg"></img>';
+				}
+			} else if (rocket_t == 'v1.1') {
+				if (rocket_f) {
+					return '<img class="c-rocketimg-out" src="img/F9_v1.1_Fi_Pa.svg"></img>';
+				} else {
+					return '<img class="c-rocketimg-out" src="img/F9_v1.1_Pa.svg"></img>';
+				}
+			} else if (rocket_t == 'v1.2') {
+				if (rocket_f) {
+					return '<img class="c-rocketimg-out" src="img/F9_v1.2_Fi_Pa.svg"></img>';
+				} else {
+					return '<img class="c-rocketimg-out" src="img/F9_v1.2_Pa.svg"></img>';
+				}
+			} else {
+				if (rocket_f) {
+					return '<img class="c-rocketimg-out" src="img/F9_B5_Fi_Pa.svg"></img>';
+				} else {
+					return '<img class="c-rocketimg-out" src="img/F9_B5_Pa.svg"></img>';
+				}
+			}
+
+		case 'Falcon Heavy':
+			if (rocket_b == 5) {
+				return '<img class="c-rocketimg-out" src="img/FH_B5_Fi_Pa.svg"></img>';
+			} else {
+				return '<img class="c-rocketimg-out" src="img/FH_Fi_Pa.svg"></img>';
+			}
+
+		case 'Falcon 1':
+			return '<img class="c-rocketimg-out" src="img/F1.svg"></img>';
+
+		default:
+			return '<img class="c-rocketimg-out" src="img/F9_v1.2_Fi_Pa.svg"></img>';
+	}
+}
+
+const showTimer = function(time, i) {
+	var interval = setInterval(function() {
+		var now = new Date().getTime();
+		var distance = time - now;
+
+		var hours = Math.floor(distance / (1000 * 60 * 60));
+		var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+		var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+		document.querySelector(`.js-countdown${i}`).innerHTML = hours + ' hours, ' + minutes + ' minutes and ' + seconds + ' seconds ';
+	}, 1000);
+};
+
 const showData = function(data) {
 	var i = 0;
 
 	data.forEach(element => {
-		var datetime = new Date(element.launch_date_utc);
+		let reusedtext, rocketimg, datetime = new Date(element.launch_date_utc);
 
 		if (datetime < new Date().getTime()) {
 			var location = element.launch_site.site_name_long;
-			var rocket = element.rocket.rocket_name;
+			var rocket_n = element.rocket.rocket_name;
+			var rocket_t = element.rocket.rocket_type;
+			var rocket_f = element.rocket.first_stage.cores[0].gridfins;
+			var rocket_b = element.rocket.first_stage.cores[0].block;
 			var orbit = element.rocket.second_stage.payloads[0].orbit_params.reference_system;
 			var position = element.rocket.second_stage.payloads[0].orbit_params.regime;
 			var reused = element.rocket.second_stage.payloads[0].reused;
@@ -62,32 +130,6 @@ const showData = function(data) {
 			var details = element.details;
 			var payload = element.rocket.second_stage.payloads.payload_id;
 			var client = element.rocket.second_stage.payloads.customers;
-
-			let reusedtext, rocketimg;
-
-			if (reused) {
-				reusedtext = 'reused';
-			} else {
-				reusedtext = 'brand new';
-			}
-
-			switch (rocket) {
-				case 'Falcon 9':
-					rocketimg = '<img class="c-rocketimg" src="img/falcon9.svg"></img>';
-					break;
-
-				case 'Falcon Heavy':
-					rocketimg = '<img class="c-rocketimg" src="img/falconheavy.svg"></img>';
-					break;
-
-				case 'Falcon 1':
-					rocketimg = '<img class="c-rocketimg" src="img/falcon1.svg"></img>';
-					break;
-
-				default:
-					rocketimg = '<img class="c-rocketimg" src="img/falcon9.svg"></img>';
-					break;
-			}
 
 			switch (missionnr) {
 				case 1:
@@ -103,57 +145,48 @@ const showData = function(data) {
 					missionnr += 'th';
 			}
 
+			if (reused) {
+				reusedtext = 'reused';
+			} else {
+				reusedtext = 'brand new';
+			}
+
 			if (link != null) {
 				link = `<p class="c-link">Watch <a href="${link}">here</a></p>`;
 			} else {
 				link = '';
 			}
 
-			/* The N'th launch was "mission"
-			"mission details" (in small gray)
-			The payload was "pauload" in a "brand new" "rocket"
-			for the client "client" on the "date"
-			this mission launched from "location"
-			Reason of failure: "reason"
-			images
-			<p class="c-countdown"><span class="js-countdown${i}"></span></p>
-				<p class="c-rocketkind">In a ${reusedtext} ${rocket}</p>
-				${rocketimg}
-				<div class="c-textarea">
-					<p class="c-orbit">Going into a ${orbit} ${position} orbit</p>
-					<p class="c-date">On ${datetime.toLocaleDateString()} at ${datetime.toLocaleTimeString()} in your local timezone</p>
-					<p class="c-launchloc">At ${location}</p>
-					${link}
-				</div>
-				</div>
+			rocketimg = getRocket(rocket_n, rocket_t, rocket_f, rocket_b)
 
-			 */
 
 			var HTML = `
 			<div class="c-content">
 				<img class="c-logo" src="img/logo-white.svg"></img>
+				${rocketimg}
 				<div class="c-form">
 				<p class="c-title">The ${missionnr} mission was ${mission}</p>
 				<p class="c-details">"${details}"</p>
 				<div class="c-textarea">
-				<p class="c-title">The payload was ${payload} in a ${reusedtext} ${rocket} for ${client}</p>
+				<p class="c-title">The payload was ${payload} in a ${reusedtext} ${rocket_n} for ${client}</p>
 				<p class="c-title">This mission launched from ${location}</p>
 				</div>
-
-				
 			</div>`;
 
 			document.querySelector('.c-container').innerHTML += HTML;
-		} else {
+		} 
+		else 
+		{
 			var location = element.launch_site.site_name_long;
-			var rocket = element.rocket.rocket_name;
+			var rocket_n = element.rocket.rocket_name;
+			var rocket_t = element.rocket.rocket_type;
+			var rocket_f = element.rocket.first_stage.cores[0].gridfins;
+			var rocket_b = element.rocket.first_stage.cores[0].block;
 			var orbit = element.rocket.second_stage.payloads[0].orbit_params.reference_system;
 			var position = element.rocket.second_stage.payloads[0].orbit_params.regime;
 			var reused = element.rocket.second_stage.payloads[0].reused;
 			var mission = element.mission_name;
 			var link = element.links.video_link;
-
-			let reusedtext, rocketimg;
 
 			if (reused) {
 				reusedtext = 'reused';
@@ -161,29 +194,14 @@ const showData = function(data) {
 				reusedtext = 'brand new';
 			}
 
-			switch (rocket) {
-				case 'Falcon 9':
-					rocketimg = '<img class="c-rocketimg-out" src="img/falcon9up.svg"></img>';
-					break;
-
-				case 'Falcon Heavy':
-					rocketimg = '<img class="c-rocketimg-out" src="img/falconheavyup.svg"></img>';
-					break;
-
-				case 'Falcon 1':
-					rocketimg = '<img class="c-rocketimg-out" src="img/falcon1up.svg"></img>';
-					break;
-
-				default:
-					rocketimg = '<img class="c-rocketimg-out" src="img/falcon9up.svg"></img>';
-					break;
-			}
-
 			if (link != null) {
 				link = `<p class="c-link">Watch <a href="${link}">here</a></p>`;
 			} else {
 				link = '';
 			}
+
+			rocketimg = getRocket(rocket_n, rocket_t, rocket_f, rocket_b)
+
 
 			var HTML = `
 			<div class="c-content">
@@ -193,7 +211,7 @@ const showData = function(data) {
 				<p class="c-title">The next mission is ${mission} and launches in</p>
 				<p class="c-countdown"><span class="js-countdown${i}"></span></p>
 				<span class="c-timepassed" style="background-color:#1a1763; grid-row: 4; grid-column: 2; width: 40%;"></span><span style="background-color:#A7A9AC66;grid-row: 4; grid-column: 2;"></span>
-				<p class="c-rocketkind">In a ${reusedtext} ${rocket}</p>
+				<p class="c-rocketkind">In a ${reusedtext} ${rocket_n}</p>
 				<div class="c-textarea">
 					<p class="c-orbit">Going into a ${orbit} ${position} orbit</p>
 					<p class="c-date">On ${datetime.toLocaleDateString()} at ${datetime.toLocaleTimeString()} in your local timezone</p>
@@ -204,8 +222,8 @@ const showData = function(data) {
 			</div>`;
 
 			document.querySelector('.c-container').innerHTML += HTML;
-
 			showTimer(datetime, i);
+
 
 			if (index == null) {
 				index = i;
@@ -215,6 +233,7 @@ const showData = function(data) {
 		amount++;
 	});
 
+	loadCanvas();
 	document.querySelectorAll('.c-hidden').forEach(element => {
 		element.classList.remove('c-hidden');
 	});
@@ -222,22 +241,9 @@ const showData = function(data) {
 
 	position = index * 100 * -1;
 	document.querySelector('.c-container').style.transform = `translateX(${position}vw)`;
-
-	loadCanvas();
 };
 
-const showTimer = function(time, i) {
-	var x = setInterval(function() {
-		var now = new Date().getTime();
-		var distance = time - now;
 
-		var hours = Math.floor(distance / (1000 * 60 * 60));
-		var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-		var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-		document.querySelector(`.js-countdown${i}`).innerHTML = hours + ' hours, ' + minutes + ' minutes and ' + seconds + ' seconds ';
-	}, 1000);
-};
 
 const init = function() {
 	document.querySelector('.c-button-right').addEventListener('click', function() {
