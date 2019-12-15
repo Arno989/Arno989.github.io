@@ -46,6 +46,9 @@ const getData = async function() {
 		const data = await fetch(ENDPOINTAll)
 			.then(r => r.json())
 			.then(data => data);
+
+		var json = JSON.stringify(data);
+		sessionStorage.setItem('data', json);
 		showData(data);
 	} catch (error) {
 		console.warn(error);
@@ -110,15 +113,14 @@ const showTimer = function(time, i) {
 			passed = Math.round((distance_passed / distance_tot) * 100);
 		document.querySelector(`.js-timeline${i}`).style.width = `${passed}%`;
 
-		if (hours > 48) {	
+		if (hours > 48) {
 			document.querySelector(`.js-countdown${i}`).innerHTML = days + ' days, ' + dhours + ' hours and </br>' + minutes + ' minutes';
 		} else {
-			if(seconds != 0){
+			if (seconds != 0) {
 				document.querySelector(`.js-countdown${i}`).innerHTML = hours + ' hours, ' + minutes + ' minutes and </br>' + seconds + ' seconds ';
-			}else{
+			} else {
 				document.querySelector(`.js-countdown${i}`).innerHTML = hours + ' hours and </br>' + minutes + ' minutes';
 			}
-			
 		}
 	}, 1000);
 };
@@ -182,8 +184,9 @@ const showData = function(data) {
 
 			imglink1 = imglink[Math.floor(Math.random() * imglink.length)];
 			imglink2 = imglink[Math.floor(Math.random() * imglink.length)];
-			if (imglink1 == imglink2)
-			{imglink2 = imglink[Math.floor(Math.random() * imglink.length)];}
+			if (imglink1 == imglink2) {
+				imglink2 = imglink[Math.floor(Math.random() * imglink.length)];
+			}
 
 			var HTML = `
 			<div class="c-content">
@@ -296,7 +299,13 @@ const init = function() {
 		document.querySelector('.c-container').style.transform = `translateX(${position}vw)`;
 		document.querySelector('.js-stars').style.transform = `translateX(${positionstars}vw)`;
 	});
-	getData();
+
+	let data = sessionStorage.getItem('data');
+	if (data == null){
+		getData()
+	}else{
+		showData(JSON.parse(data));
+	}
 };
 
 document.addEventListener('DOMContentLoaded', function() {
