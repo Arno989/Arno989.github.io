@@ -380,9 +380,6 @@ body {
     ---
     Website main Form
 */
-.c-hidden {
-	display: none;
-}
 
 .c-overflow {
 	overflow: hidden;
@@ -393,6 +390,8 @@ body {
 .c-loading {
 	overflow: hidden;
 	display: block;
+	width: 100vw;
+	height: 100vh;
 }
 
 .c-container-stars {
@@ -467,34 +466,68 @@ body {
     Website main Text
 */
 
+.c-timeline {
+	color:slategray;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+
+.c-timeline_text_past {
+	padding: 8px;
+	max-width: 100px;
+	left:0
+}
+
+.c-timeline_text_next {
+	padding: 8px;
+	max-width: 100px;
+	right: 5px;
+}
+
+.c-timeline-bar {
+	display: flex;
+	height: 10px;
+	width: 100%;
+	background: linear-gradient(221deg, rgba(30, 156, 215, 1) 0%, rgba(0, 92, 153, 1) 100%) rgb(30, 156, 215);
+	margin: 0 0 32px;
+}
+
+.c-timeline_passed {
+	background: linear-gradient(90deg, #1a1763 2.34%, #9a479c 62.28%);
+	height: 100%;
+	width: 40%;
+}
+
 .c-form p {
 }
 
-.c-textarea {
-	font-size: 22px;
-	text-align: left;
-}
-
 .c-title {
+	padding: 32px 16px 16px;
 	text-align: center;
 	font-size: 32px;
 }
 
 .c-countdown {
+	padding: 0 16px 16px;
+	color: var(--color-neutral);
 	text-align: center;
-	font-size: 48px;
+	font-size: 40px;
 	font-weight: 500;
 }
 
+.c-textarea {
+	padding: 0 32px 16px;
+	color: var(--color-neutral-dark);
+	font-size: 22px;
+	text-align: left;
+}
+
 .c-details {
+	padding: 0 32px 32px;
 	text-align: center;
 	font-size: 18px;
 	color: gray;
-}
-
-.c-rocketkind {
-	font-size: 24px;
-	margin: 0;
 }
 
 /*
@@ -535,7 +568,6 @@ body {
 	z-index: 5;
 }
 
-
 @media (min-width: 1000px) {
 	.c-button-right {
 		display: block;
@@ -545,7 +577,7 @@ body {
 		align-self: center;
 		z-index: 5;
 	}
-	
+
 	.c-button-left {
 		display: block;
 		cursor: pointer;
@@ -567,6 +599,10 @@ body {
 	height: 100vh;
 	width: 100vw;
 	z-index: -50;
+}
+
+.c-hidden {
+	display: none;
 }
 
 /*
@@ -743,38 +779,46 @@ body {
 */
 
 #rocket {
-	position: absolute;
-	width: 27px;
-	left: 57%;
-	margin-left: -40px;
-	top: 50px;
-	z-index: -2;
+	height: 500px;
 }
 
 .artboard {
 	position: relative;
-	width: 50vh;
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	width: 50vw;
 	height: 50vh;
-	border-radius: 50%;
 	margin: 0 auto;
 	margin-top: 25vh;
 	backface-visibility: none;
 	/* background: radial-gradient(ellipse at top, rgba(255, 255, 255, 0.3) 0%, rgba(1, 34, 38, 0) 60%); */
-	transform: rotate(-40deg);
+	transform: rotate(-40deg) translateY(25%);
+}
+
+@media (min-width: 1000px) {
+	.artboard {
+		transform: rotate(-40deg);
+	}
+}
+
+.rocket {
+	z-index: 100;
+	display: block;
+}
+
+.rocketimg {
 }
 
 .fire {
-	top: 67%;
-	z-index: -4;
+	z-index: -100;
 	position: absolute;
-	left: 50%;
-	margin-left: -13.5px;
+	top: 495px;
 	width: 40px;
 	height: 40px;
 	border-radius: 80% 0 55% 50% / 55% 0 80% 50%;
 	background-color: #ffa600;
 	transform: rotate(135deg);
-	margin-top: 64px;
 	animation: flicker infinite 1s alternate ease-in-out;
 }
 
@@ -805,6 +849,10 @@ body {
 	100% {
 		box-shadow: 0 0 17px 10px rgba(238, 204, 165, 0.5);
 	}
+}
+
+.stars2 {
+	transform: translatex(-5vw);
 }
 
 .shootingstar {
