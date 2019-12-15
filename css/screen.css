@@ -345,7 +345,6 @@ body {
 	grid-column: 2;
 	justify-self: center;
 	align-self: center;
-	width: 100%;
 	margin: 0;
 }
 
@@ -439,8 +438,8 @@ body {
 	height: 80vh;
 	display: flex;
 	flex-direction: column;
-	justify-content: flex-start;
-	align-content: center;
+	justify-content: space-between;
+	align-content: flex-start;
 }
 
 @media (min-width: 1000px) {
@@ -455,8 +454,8 @@ body {
 		max-width: 600px;
 		display: flex;
 		flex-direction: column;
-		justify-content: flex-start;
-		align-content: center;
+		justify-content: space-between;
+		align-content: flex-start;
 	}
 }
 
@@ -499,9 +498,6 @@ body {
 	width: 40%;
 }
 
-.c-form p {
-}
-
 .c-title {
 	padding: 32px 16px 16px;
 	text-align: center;
@@ -517,7 +513,7 @@ body {
 }
 
 .c-textarea {
-	padding: 0 32px 16px;
+	padding: 0 32px 64px;
 	color: var(--color-neutral-dark);
 	font-size: 22px;
 	text-align: left;
@@ -587,6 +583,16 @@ body {
 		z-index: 5;
 	}
 }
+
+.c-img_right {
+	width: 50%;
+}
+
+.c-img_left {
+	width: 50%;
+}
+
+
 
 /*
     Component: Background

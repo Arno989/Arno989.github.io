@@ -102,12 +102,24 @@ const showTimer = function(time, i) {
 			distance = time - now.getTime(),
 			distance_passed = now - date_last,
 			distance_tot = time - date_last,
+			days = Math.floor(distance / (1000 * 60 * 60 * 24)),
+			dhours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
 			hours = Math.floor(distance / (1000 * 60 * 60)),
 			minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
 			seconds = Math.floor((distance % (1000 * 60)) / 1000),
-			passed = Math.round(((distance_passed) / distance_tot) * 100);
+			passed = Math.round((distance_passed / distance_tot) * 100);
 		document.querySelector(`.js-timeline${i}`).style.width = `${passed}%`;
-		document.querySelector(`.js-countdown${i}`).innerHTML = hours + ' hours, ' + minutes + ' minutes and ' + seconds + ' seconds ';
+
+		if (hours > 48) {	
+			document.querySelector(`.js-countdown${i}`).innerHTML = days + ' days, ' + dhours + ' hours and </br>' + minutes + ' minutes';
+		} else {
+			if(seconds != 0){
+				document.querySelector(`.js-countdown${i}`).innerHTML = hours + ' hours, ' + minutes + ' minutes and </br>' + seconds + ' seconds ';
+			}else{
+				document.querySelector(`.js-countdown${i}`).innerHTML = hours + ' hours and </br>' + minutes + ' minutes';
+			}
+			
+		}
 	}, 1000);
 };
 
@@ -117,7 +129,7 @@ const showData = function(data) {
 	data.forEach(element => {
 		var reusedtext,
 			rocketimg,
-			progression,
+			link,
 			datetime = new Date(element.launch_date_utc),
 			location = element.launch_site.site_name_long,
 			rocket_n = element.rocket.rocket_name,
@@ -128,7 +140,8 @@ const showData = function(data) {
 			position = element.rocket.second_stage.payloads[0].orbit_params.regime,
 			reused = element.rocket.second_stage.payloads[0].reused,
 			mission = element.mission_name,
-			link = element.links.video_link,
+			vidlink = element.links.video_link,
+			imglink = element.links.flickr_images,
 			missionnr = element.flight_number,
 			details = element.details,
 			payload = element.rocket.second_stage.payloads.payload_id,
@@ -158,8 +171,8 @@ const showData = function(data) {
 				reusedtext = 'brand new';
 			}
 
-			if (link != null) {
-				link = `<p class="c-link">Watch <a href="${link}">here</a></p>`;
+			if (vidlink != null) {
+				link = `<p class="c-link">Watch <a href="${vidlink}">here</a></p>`;
 			} else {
 				link = '';
 			}
@@ -167,16 +180,26 @@ const showData = function(data) {
 			rocketimg = getRocket(rocket_n, rocket_t, rocket_f, rocket_b);
 			date_last = datetime;
 
+			imglink1 = imglink[Math.floor(Math.random() * imglink.length)];
+			imglink2 = imglink[Math.floor(Math.random() * imglink.length)];
+			if (imglink1 == imglink2)
+			{imglink2 = imglink[Math.floor(Math.random() * imglink.length)];}
+
 			var HTML = `
 			<div class="c-content">
 				<img class="c-logo" src="img/logo-white.svg"></img>
 				${rocketimg}
 				<div class="c-form">
-				<p class="c-title">The ${missionnr} mission was ${mission}</p>
-				<p class="c-details">"${details}"</p>
-				<div class="c-textarea">
-				<p>The payload was ${payload} in a ${reusedtext} ${rocket_n} for ${client}</p>
-				<p>This mission launched from ${location}</p>
+					<p class="c-title">The ${missionnr} mission was ${mission}</p>
+					<p class="c-details">"${details}"</p>
+					<div class="c-textarea">
+						<p>The payload was ${payload} in a ${reusedtext} ${rocket_n} for ${client}</p>
+						<p>This mission launched from ${location}</p>
+					</div>
+					<div style="display:flex;">
+						<a href="${imglink1}" class="c-img_left"><img src="${imglink1}"></img></a>
+						<a href="${imglink2}" class="c-img_right"><img src="${imglink2}"></img></a>
+					</div>
 				</div>
 			</div>`;
 
@@ -188,8 +211,8 @@ const showData = function(data) {
 				reusedtext = 'brand new';
 			}
 
-			if (link != null) {
-				link = `<p class="c-link">Watch <a href="${link}">here</a></p>`;
+			if (vidlink != null) {
+				link = `<p class="c-link">Watch <a href="${vidlink}">here</a></p>`;
 			} else {
 				link = '';
 			}
@@ -207,16 +230,18 @@ const showData = function(data) {
 				${rocketimg}
 				<div class="c-form">
 					<div title="Timer may deviate if launch date is not confirmed yet and placed on the 1st of the planned month.">
-						<p class="c-title">Upcomming mission ${missionnr} is ${mission} and launches in</p>
+						<p class="c-title">Upcoming mission ${missionnr} is ${mission} and launches in</p>
 					</div>
-					<p class="c-countdown js-countdown${i}"></p>
-					<div class="c-timeline">
-						<p class="c-timeline_text_past">Last launch</p>
-						<p class="c-timeline_text_next">This launch</p>
-					</div>
-					<div class="c-timeline-bar">
-						<div class="c-timeline_passed js-timeline${i}"></div>
-						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="transform: translate(-12px, -7px) scale(1.5);"><path d="M0 0h24v24H0z" fill="none"/><path fill="SLATEGRAY" d="M7.41 18.59L8.83 20 12 16.83 15.17 20l1.41-1.41L12 14l-4.59 4.59zm9.18-13.18L15.17 4 12 7.17 8.83 4 7.41 5.41 12 10l4.59-4.59z"/></svg>
+					<p title="Timer may deviate if launch date is not confirmed yet and placed on the 1st of the planned month." class="c-countdown js-countdown${i}"></p>
+					<div>
+						<div class="c-timeline">
+							<p class="c-timeline_text_past">Last launch</p>
+							<p class="c-timeline_text_next">This launch</p>
+						</div>
+						<div class="c-timeline-bar">
+							<div class="c-timeline_passed js-timeline${i}"></div>
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="transform: translate(-12px, -7px) scale(1.5);"><path d="M0 0h24v24H0z" fill="none"/><path fill="SLATEGRAY" d="M7.41 18.59L8.83 20 12 16.83 15.17 20l1.41-1.41L12 14l-4.59 4.59zm9.18-13.18L15.17 4 12 7.17 8.83 4 7.41 5.41 12 10l4.59-4.59z"/></svg>
+						</div>
 					</div>
 					<div class="c-textarea">
 						<p class="c-rocketkind">In a ${reusedtext} ${rocket_n}</p>
