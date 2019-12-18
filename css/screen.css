@@ -763,6 +763,11 @@ body {
 	align-items: center;
 	height: 100vh;
 }
+@media screen and (min-width: 1000px) {
+.kbent-beu{
+	display: flex;
+}
+}
 
 .c-landing p {
 	font-size: calc(var(--baseline) * 3);
