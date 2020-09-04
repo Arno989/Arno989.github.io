@@ -421,18 +421,12 @@ body {
 
 /**  stars  **/
 .c-container-stars {
-	display: flex;
-	justify-content: center;
-	
-}
-
-.js-starbackground{
 	will-change: scroll-position;
-	justify-self: center;
 	transition-duration: 0.75s;
 	transition-timing-function: ease-out;
-	background-repeat: repeat-x;
-	/* height: 100vh; */
+	background-repeat: repeat;
+	height: 100vh;
+	/* min-width: 100vw; */
 	z-index: -100;
 }
 

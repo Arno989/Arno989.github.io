@@ -55,6 +55,7 @@ const loadCanvas = (amount) => {
 	*/
 
 	container_stars = document.querySelector('.c-container-stars');
+	container_stars.style.width = `${document.documentElement.clientWidth * (amount / 3)}px`;
 	container_stars.style.background = 'url(' + dataUrl + ')';
 };
 
@@ -184,14 +185,9 @@ const showTimer = function (time, i) {
 			passed = Math.round((distance_passed / distance_tot) * 100);
 		document.querySelector(`.js-timeline${i}`).style.width = `${passed}%`;
 
-		if (days > 3) {
-			if (hours != 0) {
-				document.querySelector(`.js-countdown${i}`).innerHTML = days + ' days, ' + dhours + ' hours';
-			} else {
-				document.querySelector(`.js-countdown${i}`).innerHTML = days + ' days';
-			}
-		}
-		else if (hours > 48) {
+		if (days > 5) {
+			document.querySelector(`.js-countdown${i}`).innerHTML = days + ' days';
+		} else if (hours > 48) {
 			if (minutes != 0) {
 				document.querySelector(`.js-countdown${i}`).innerHTML = days + ' days, ' + dhours + ' hours and </br>' + minutes + ' minutes';
 			} else {
@@ -207,13 +203,13 @@ const showTimer = function (time, i) {
 	}, 1000);
 };
 
-function truncate( str, n, useWordBoundary ){
-  if (str.length <= n) { return str; }
-  const subString = str.substr(0, n-1); // the original check
-  return (useWordBoundary 
-    ? subString.substr(0, subString.lastIndexOf(" ")) 
-    : subString) + " &hellip;";
-};
+function truncate(str, n, useWordBoundary) {
+	if (str.length <= n) {
+		return str;
+	}
+	const subString = str.substr(0, n - 1); // the original check
+	return (useWordBoundary ? subString.substr(0, subString.lastIndexOf(' ')) : subString) + ' &hellip;';
+}
 
 const showData = function (data) {
 	var i = 0;
@@ -278,7 +274,7 @@ const showData = function (data) {
 				${rocketimg}
 				<div class="c-form">
 					<p class="c-title">The ${missionnr} mission was ${mission}</p>`;
-			
+
 			if (details != null) {
 				HTML += `
 				<p class="c-details" title="${details}">"${truncate(details, 250)}"</p>
@@ -291,7 +287,7 @@ const showData = function (data) {
 						<p>This mission launched from ${location}</p>
 					</div>`;
 
-			var imglink1, imglink2
+			var imglink1, imglink2;
 			if (imglink.length != 0) {
 				imglink1 = imglink[Math.floor(Math.random() * imglink.length)];
 				HTML += `
@@ -299,7 +295,7 @@ const showData = function (data) {
 						<a href="${imglink1}" class="c-img_center c-img"><img src="${imglink1}"></img></a>
 					</div>`;
 			}
-			
+
 			HTML += `
 				</div>
 			</div>`;
@@ -369,19 +365,18 @@ const showData = function (data) {
 	document.querySelector('.c-loading').style.display = 'none';
 
 	position = index_next * 100 * -1;
+	positionstars = index_next * 33 * -1;
 	document.querySelector('.c-container').style.transform = `translateX(${position}vw)`;
+	document.querySelector('.c-container-stars').style.transform = `translateX(${positionstars}vw)`;
 };
 
 const hideButtons = () => {
 	if ((position / 100) * -1 < amount - 1 && (position / 100) * -1 > 0) {
-		console.log('show')
 		button_right.style.display = 'block';
 		button_left.style.display = 'block';
 	} else if ((position / 100) * -1 >= amount - 1) {
-		console.log('hide-r');
 		button_right.style.display = 'none';
 	} else if ((position / 100) * -1 <= 0) {
-		console.log('hide-l');
 		button_left.style.display = 'none';
 	}
 };
@@ -409,18 +404,12 @@ const init = function () {
 };
 
 document.addEventListener('DOMContentLoaded', function () {
-	// document.querySelector('.c-container').style.top = `${document.documentElement.clientHeight * -1}px`;
 	init();
-	
+
 	let data = sessionStorage.getItem('data');
 	if (data == null) {
 		getData();
 	} else {
 		showData(JSON.parse(data));
-		// loadCanvas(amount);
-		// document.querySelectorAll('.c-hidden').forEach((element) => {
-		// 	element.classList.remove('c-hidden');
-		// });
-		// document.querySelector('.c-loading').style.display = 'none';
 	}
 });
