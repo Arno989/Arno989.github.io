@@ -55,7 +55,7 @@ const loadCanvas = (amount) => {
 	*/
 
 	container_stars = document.querySelector('.c-container-stars');
-	container_stars.style.width = `${document.documentElement.clientWidth * (amount / 3)}px`;
+	container_stars.style.width = `${document.documentElement.clientWidth * (amount / 2.8)}px`;
 	container_stars.style.background = 'url(' + dataUrl + ')';
 };
 
