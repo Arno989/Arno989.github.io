@@ -386,6 +386,13 @@ body {
     ---
     Website main Form
 */
+.c-loading {
+	overflow: hidden;
+	display: block;
+	width: 100vw;
+	height: 100vh;
+}
+
 
 .c-overflow {
 	overflow: hidden;
@@ -393,12 +400,7 @@ body {
 	width: 100vw;
 }
 
-.c-loading {
-	overflow: hidden;
-	display: block;
-	width: 100vw;
-	height: 100vh;
-}
+/**
 
 .c-container-stars {
 	display: flex;
@@ -415,7 +417,42 @@ body {
 	z-index: -51;
 }
 
+**/
+
+/**  stars  **/
+.c-container-stars {
+	display: flex;
+	justify-content: center;
+	
+}
+
+.js-starbackground{
+	will-change: scroll-position;
+	justify-self: center;
+	transition-duration: 0.75s;
+	transition-timing-function: ease-out;
+	background-repeat: repeat-x;
+	/* height: 100vh; */
+	z-index: -100;
+}
+
+.js-starcanvas {
+	display:none;
+	will-change: scroll-position;
+	justify-self: center;
+	transition-duration: 0.75s;
+	transition-timing-function: ease-out;
+	position: fixed;
+	height: 100vh;
+}
+
+.js-starpattern{
+	display: none;
+}
+
+/**  content  **/
 .c-container {
+	position: relative;
 	will-change: scroll-position;
 	transition-duration: 0.75s;
 	transition-timing-function: ease-out;
@@ -474,7 +511,8 @@ body {
 		max-width: 600px;
 		display: flex;
 		flex-direction: column;
-		justify-content: space-between;
+		/* justify-content: space-between; */
+		justify-content: flex-start;
 		align-content: flex-start;
 	}
 }
@@ -575,6 +613,7 @@ body {
 
 .c-textarea {
 	padding: 0 64px 64px;
+	margin: 24px;
 	color: var(--color-neutral-dark);
 	font-size: calc(var(--baseline) * 3);
 	text-align: left;
@@ -584,6 +623,7 @@ body {
 	overflow: hidden;
 	max-height: 30%;
 	padding: 0 32px 32px;
+	margin-top: 32px;
 	text-align: center;
 	font-size: calc(var(--baseline) * 2);
 	color: gray;
@@ -605,7 +645,7 @@ body {
 	}
 
 	.c-textarea {
-		padding: 0 32px 64px;
+		padding: 0 32px 24px;
 		color: var(--color-neutral-dark);
 		font-size: 22px;
 		text-align: left;
@@ -614,7 +654,7 @@ body {
 	.c-details {
 		overflow: hidden;
 		max-height: 30%;
-		padding: 0 32px 32px;
+		padding: 0 32px 24px;
 		text-align: center;
 		font-size: 18px;
 		color: gray;
@@ -717,6 +757,12 @@ body {
 		grid-column: 1;
 	}
 }
+
+.c-img_center{
+	width: 100%;
+	position: relative;
+}
+
 .c-img_right {
 	width: 50%;
 }
@@ -1174,6 +1220,14 @@ body {
 /*------------------------------------*\
 #UTILITIES
 \*------------------------------------*/
+
+.u-dp-none{
+	display: none;
+}
+
+.u-dp-block{
+	display: block;
+}
 
 /*
     Utilities: color
