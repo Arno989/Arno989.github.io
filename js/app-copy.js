@@ -184,8 +184,19 @@ const showTimer = function (time, i) {
 			passed = Math.round((distance_passed / distance_tot) * 100);
 		document.querySelector(`.js-timeline${i}`).style.width = `${passed}%`;
 
-		if (hours > 48) {
-			document.querySelector(`.js-countdown${i}`).innerHTML = days + ' days, ' + dhours + ' hours and </br>' + minutes + ' minutes';
+		if (days > 3) {
+			if (hours != 0) {
+				document.querySelector(`.js-countdown${i}`).innerHTML = days + ' days, ' + dhours + ' hours';
+			} else {
+				document.querySelector(`.js-countdown${i}`).innerHTML = days + ' days';
+			}
+		}
+		else if (hours > 48) {
+			if (minutes != 0) {
+				document.querySelector(`.js-countdown${i}`).innerHTML = days + ' days, ' + dhours + ' hours and </br>' + minutes + ' minutes';
+			} else {
+				document.querySelector(`.js-countdown${i}`).innerHTML = days + ' days, ' + dhours + ' hours';
+			}
 		} else {
 			if (seconds != 0) {
 				document.querySelector(`.js-countdown${i}`).innerHTML = hours + ' hours, ' + minutes + ' minutes and </br>' + seconds + ' seconds ';
