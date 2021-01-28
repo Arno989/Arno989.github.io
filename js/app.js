@@ -5,8 +5,8 @@ Bigg lag
 mobilen't
 
 */
-var ENDPOINT = 'https://api.spacexdata.com/v3/launches/';
-var ENDPOINTAll = 'https://api.spacexdata.com/v3/launches?sort=launch_date_utc';
+var ENDPOINT = 'https://api.spacexdata.com/v4/launches/';
+var ENDPOINTAll = 'https://api.spacexdata.com/v4/launches?sort=launch_date_utc';
 let position = 0,
 	positionstars = 0,
 	amount,
