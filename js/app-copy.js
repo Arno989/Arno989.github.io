@@ -357,6 +357,9 @@ const showData = function (data) {
 		i++;
 		amount++;
 	});
+	if (index_next == null) {
+		index_next = i-4
+	}
 
 	loadCanvas(amount);
 	document.querySelectorAll('.c-hidden').forEach((element) => {
